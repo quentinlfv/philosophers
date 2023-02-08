@@ -1,12 +1,14 @@
-NAME = pipex
+NAME = philo
 
 CC		= gcc
 
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra -lpthread
 
 
 
 SRCS		= main.c \
+				mutex.c \
+				functions.c \
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -19,7 +21,7 @@ $(NAME): $(OBJS)
 
 clean:
 
-	$(RM) $(OBJS)
+	$(RM) $(OBJS)	
 
 fclean: clean
 		$(RM) $(NAME)

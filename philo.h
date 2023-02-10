@@ -20,30 +20,38 @@ typedef struct s_philo
     // pthread_mutex_t *mutex;
 }t_philo;
 
+typedef struct s_fork
+{
+    pthread_mutex_t    right;
+    pthread_mutex_t    left;
+}t_fork;
+
 typedef struct s_indiv
 {
     int         id;
     size_t      death_timer;
     pthread_t   philo;
     // struct timeval get_time;
-    t_philo *ptr;
+    t_philo     *ptr;
+    t_fork      fork;
 }t_indiv;
 
 /* main.c */
 int         check_args(int argc);
 void        *routine(void *arg);
 void        *watch(void *arg);
+void        msg(t_indiv p);
 int         create_watch(t_philo p);
 t_philo     init_var(t_philo p, char **argv);
 t_indiv     *init_philo(t_indiv *p, t_philo *data);
 void        init_death_timer(t_indiv *p);
-int init_thread(t_indiv *p, size_t nu);
+int         init_thread(t_indiv *p, size_t nu);
 
 /* mutex.c */
-int     init_mutex(t_philo p);
-void    destroy_mutex(t_philo p);
+int         init_mutex(t_philo p);
+void        destroy_mutex(t_philo p);
 
 /* functions.c */
-size_t	ft_atoi(const char *nptr);
+size_t	    ft_atoi(const char *nptr);
 
 #endif

@@ -16,12 +16,10 @@ void *routine(void *arg)
     t_indiv p;
 
     p = *(t_indiv *)arg;
+    msg(p);
     usleep(p.ptr->time_to_eat * 1000);
     usleep(p.ptr->time_to_sleep * 1000);
     /* thinking */
-    // gettimeofday(&p.action, NULL);
-    // printf("%ld    Hello im a philosopher number and my id is %d\n", ((p.action.tv_sec * 1000 + p.action.tv_usec) -
-    // (p.start.tv_sec * 1000 + p.start.tv_usec)), p.my_philo);
     return (NULL);
 }
 
@@ -29,6 +27,7 @@ void *routine(void *arg)
 void    msg(t_indiv p)
 {
     struct timeval action;
+
     gettimeofday(&action, NULL);
     printf("%ld    Hello im a philosopher number and my id is %d\n", ((action.tv_sec * 1000 + action.tv_usec) -
     (p.ptr->start.tv_sec * 1000 + p.ptr->start.tv_usec)), p.id);
@@ -133,22 +132,25 @@ int init_thread(t_indiv *p, size_t nu)
     {
         if (pthread_create(&p[i].philo, NULL, &routine, &p[i]) != 0)
         {
-            perror("Failed to create thread\n");
+            perror("Failed to create thread");
             return (0);
         }
+        i++;
     }
     i = 0;
     while (i < nu)
     {
-          if (pthread_join(p[i].philo, NULL) != 0)
-          {
-            perror("Failed to join");
+        if (pthread_join(p[i].philo, NULL) != 0)
+        {
+            perror("Failed to join\n");
             return (0);
-          }
+        }
+        printf("join OK\n");
         i++;
     }
     return (1);
 }
+
 /* --------------------------------------------------------------------*/
 
 
@@ -169,9 +171,8 @@ int init_thread(t_indiv *p, size_t nu)
 
 int main(int argc, char **argv)
 {
-    t_indiv *p;
+    t_indiv *p; 
     t_philo data;
-    // struct timeval start;
 
     if (!check_args(argc))
         return (2);

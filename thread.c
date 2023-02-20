@@ -14,17 +14,6 @@ int init_thread(t_indiv *p, size_t nu)
         }
         i++;
     }
-    // i = 0;
-    // while (i < nu)
-    // {
-        // if (pthread_join(p[i].philo, NULL) != 0)
-        // {
-            // perror("Failed to join\n");
-            // return (0);
-        // }
-        // printf("join OK\n");
-        // i++;
-    // }
     return (1);
 }
 

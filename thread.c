@@ -34,3 +34,18 @@ int join_thread(t_indiv *p, size_t nu)
     }
     return (1);
 }
+
+void    destroy_mutex(t_indiv *p, size_t nu)
+{
+    size_t  i;
+
+    i = 0;
+    pthread_mutex_destroy(&p[i].ptr->m_life);
+    pthread_mutex_destroy(&p[i].ptr->msg);
+    while (i < nu)
+    {
+        pthread_mutex_destroy(&p[i].my_fork);
+        pthread_mutex_destroy(&p[i].m_death_timer);
+        i++;
+    }
+}

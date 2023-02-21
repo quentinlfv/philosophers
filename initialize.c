@@ -3,9 +3,10 @@
 t_philo    init_var(t_philo data, char **argv)
 {
     pthread_mutex_init(&data.m_life, NULL);
-    pthread_mutex_lock(&data.m_life);
+    pthread_mutex_init(&data.m_start, NULL);
+    // pthread_mutex_lock(&data.m_life);
     data.life = 1;
-    pthread_mutex_unlock(&data.m_life);
+    // pthread_mutex_unlock(&data.m_life);
     data.nu_philo = ft_atoi(argv[1]);
     data.time_to_die = ft_atoi(argv[2]);
     data.time_to_eat = ft_atoi(argv[3]);
@@ -34,7 +35,6 @@ t_indiv    *init_philo(t_indiv *p, t_philo *data)
         pthread_mutex_init(&p[i].m_death_timer, NULL);
         i++;
     }
-    printf("nu phil : %ld\n", p[0].ptr->nu_philo);
     return (p);
 }
 
@@ -61,7 +61,7 @@ t_indiv *init_fork(t_indiv *p, size_t nu)
     {
         p[i].fork.right = &p[i].my_fork;
         if (p[i].id == (int)nu)
-            p[i].fork.left = &p[1].my_fork;
+            p[i].fork.left = &p[0].my_fork;
         else
             p[i].fork.left = &p[i + 1].my_fork;
         i++;

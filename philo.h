@@ -18,9 +18,7 @@ typedef struct s_philo
     struct  timeval start;
     pthread_mutex_t msg;
     pthread_mutex_t m_life;
-    // struct timeval action;
-    // pthread_t watch;
-    // pthread_mutex_t *mutex;
+    pthread_mutex_t m_start;
 }t_philo;
 
 typedef struct s_fork
@@ -31,14 +29,13 @@ typedef struct s_fork
 
 typedef struct s_indiv
 {
-    int         id;
-    size_t      death_timer;
-    pthread_t   philo;
+    int             id;
+    size_t          death_timer;
+    pthread_t       philo;
     pthread_mutex_t my_fork;
     pthread_mutex_t m_death_timer;
-    // struct timeval get_time;
-    t_philo     *ptr;
-    t_fork      fork;
+    t_philo         *ptr;
+    t_fork          fork;
 }t_indiv;
 
 /* main.c */
@@ -55,14 +52,14 @@ size_t      reset_death_timer(t_indiv p);
 int         check_death(t_indiv *p, size_t nu);
 int         init_thread(t_indiv *p, size_t nu);
 int         join_thread(t_indiv *p, size_t nu);
-void        get_time(t_philo data);
+size_t      get_time(t_philo *data);
+void        destroy_mutex(t_indiv *p, size_t nu);
 
 /* mutex.c */
 int         init_mutex(t_philo p);
-void        destroy_mutex(t_philo p);
 
 /* message. c */
-void    action_msg(t_indiv p, char *message);
+void        action_msg(t_indiv p, char *message);
 void        msg(t_indiv p);
 void        fork_msg(t_indiv p);
 void        eat_msg(t_indiv p);
